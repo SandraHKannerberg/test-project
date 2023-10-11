@@ -1,4 +1,4 @@
-package org.restapi.exceptionHandler;
+package org.restapi.exceptionhandler;
 
 import org.restapi.exception.UserNotFoundException;
 

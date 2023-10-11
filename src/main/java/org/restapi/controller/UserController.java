@@ -32,15 +32,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //Hårdkodad array - byt mot databasen senare
-    // static {
-    //     myUsers.addAll(Set.of(
-    //         createMyUser(1, "TestUser1", "TestCountry1"),
-    //         createMyUser(2, "TestUser2", "TestCountry2"),
-    //         createMyUser(3, "TestUser3", "TestCountry3"))
-    //     );
-    // }
-
     //Endpoints
     //GET all users
     @GET

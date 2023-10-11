@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name= "test_tabell")
+@Table(name= "user_table")
 
 public class User {
 
@@ -46,9 +46,4 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    // // @Override
-    // // public int compareTo(User o) {
-    // //     return id - o.getId();
-    // // }
 }

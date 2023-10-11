@@ -9,7 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @ApplicationScoped
 public class DefaultUserService implements UserService {
@@ -23,11 +22,7 @@ public class DefaultUserService implements UserService {
 
     @Override
     public User getUserById(long id) throws UserNotFoundException {
-    User user = userRepository.findById(id);
-    if (user == null) {
-        throw new UserNotFoundException("The user doesn't exist");
-    }
-    return user;
+        return userRepository.findByIdOptional(id).orElseThrow(() -> new UserNotFoundException("There user doesn't exist"));
     }
 
     @Override

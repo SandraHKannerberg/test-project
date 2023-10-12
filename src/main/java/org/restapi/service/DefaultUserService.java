@@ -3,7 +3,6 @@ package org.restapi.service;
 import org.restapi.entity.User;
 import org.restapi.exception.UserNotFoundException;
 import org.restapi.repository.UserRepository;
-import org.restapi.service.UserService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

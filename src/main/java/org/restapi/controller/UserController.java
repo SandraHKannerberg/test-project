@@ -5,6 +5,7 @@ import org.restapi.exception.UserNotFoundException;
 import org.restapi.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -20,7 +21,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-//import org.jboss.logging.Logger;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,9 +28,7 @@ import jakarta.ws.rs.core.Response;
 public class UserController {
 
     private final UserService userService;
-    //private static final Logger logger = Logger.getLogger(UserController.class);
-
-
+   
     @Inject
     public UserController(UserService userService) {
         this.userService = userService;
@@ -45,24 +43,18 @@ public class UserController {
 
     //POST create a new user
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     public User createUser(@Valid UserDto userDto) {
-        return userService.saveUser(userDto.toUser());
+        User user = userDto.toUser();
+        user.setId(generateUniqueId());
+        return userService.saveUser(user);
     }
 
-    // @POST
-    // public User createUser(@Valid UserDto userDto) {
-    // // Logga information om inkommande data
-    // logger.info("Mottagen POST-förfrågan: " + userDto.toString());
-
-    // // Anropa din UserService för att spara användaren
-    // User createdUser = userService.saveUser(userDto.toUser());
-
-    // // Logga information om resultatet
-    // logger.info("Användare skapad: " + createdUser.toString());
-
-    // return createdUser;
-    // }
-
+    //Give the new user a random id 
+    private String generateUniqueId() {
+        return UUID.randomUUID().toString().substring(0, 6);
+    }
+    
     //GET a specific user
     @GET
     @Path("/{id}")

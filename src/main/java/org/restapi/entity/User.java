@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(length = 6)
     private String id;
 
     @Column(name="name", nullable=false)

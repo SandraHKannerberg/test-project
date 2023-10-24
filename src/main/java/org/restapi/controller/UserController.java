@@ -20,7 +20,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.jboss.logging.Logger;
+//import org.jboss.logging.Logger;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,7 +28,7 @@ import org.jboss.logging.Logger;
 public class UserController {
 
     private final UserService userService;
-    private static final Logger logger = Logger.getLogger(UserController.class);
+    //private static final Logger logger = Logger.getLogger(UserController.class);
 
 
     @Inject
@@ -44,24 +44,24 @@ public class UserController {
     }
 
     //POST create a new user
-    // @POST
-    // public User createUser(@Valid UserDto userDto) {
-    //     return userService.saveUser(userDto.toUser());
-    // }
-
     @POST
     public User createUser(@Valid UserDto userDto) {
-    // Logga information om inkommande data
-    logger.info("Mottagen POST-förfrågan: " + userDto.toString());
-
-    // Anropa din UserService för att spara användaren
-    User createdUser = userService.saveUser(userDto.toUser());
-
-    // Logga information om resultatet
-    logger.info("Användare skapad: " + createdUser.toString());
-
-    return createdUser;
+        return userService.saveUser(userDto.toUser());
     }
+
+    // @POST
+    // public User createUser(@Valid UserDto userDto) {
+    // // Logga information om inkommande data
+    // logger.info("Mottagen POST-förfrågan: " + userDto.toString());
+
+    // // Anropa din UserService för att spara användaren
+    // User createdUser = userService.saveUser(userDto.toUser());
+
+    // // Logga information om resultatet
+    // logger.info("Användare skapad: " + createdUser.toString());
+
+    // return createdUser;
+    // }
 
     //GET a specific user
     @GET

@@ -20,8 +20,12 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public User getUserById(long id) throws UserNotFoundException {
-        return userRepository.findByIdOptional(id).orElseThrow(() -> new UserNotFoundException("There user doesn't exist"));
+    public User getUserById(String id) throws UserNotFoundException {
+    User user = userRepository.find("id", id).firstResult();
+    if (user == null) {
+        throw new UserNotFoundException("The user doesn't exist");
+    }
+    return user;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class DefaultUserService implements UserService {
 
     @Transactional
     @Override
-    public User updateUser(long id, User user) throws UserNotFoundException {
+    public User updateUser(String id, User user) throws UserNotFoundException {
         User existingUser = getUserById(id);
         existingUser.setName(user.getName());
         existingUser.setCountry(user.getCountry());
@@ -42,13 +46,13 @@ public class DefaultUserService implements UserService {
     @Transactional
     @Override
     public User saveUser(User user) {
-        userRepository.persistAndFlush(user);
+        userRepository.persist(user); //Database generate an ID
         return user;
     }
 
     @Transactional
     @Override
-    public void deleteUser(long id) throws UserNotFoundException {
+    public void deleteUser(String id) throws UserNotFoundException {
         userRepository.delete(getUserById(id));
     }
 }

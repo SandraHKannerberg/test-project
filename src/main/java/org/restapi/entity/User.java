@@ -10,24 +10,24 @@ import jakarta.validation.constraints.Size;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @Column(name="name", nullable=false)
     @NotBlank
-    @Size(max = 150)
+    @Size(max = 255)
     private String name;
 
     @Column(name="country", nullable = false)
     @NotBlank
-    @Size(max = 150)
+    @Size(max = 255)
     private String country;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

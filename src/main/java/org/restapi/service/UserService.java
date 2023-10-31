@@ -17,4 +17,7 @@ public interface UserService {
 
     void deleteUser(String id) throws UserNotFoundException;
 
+    User getUserByName(String name);
+
+    boolean isUserNameUnique(String name);
 }

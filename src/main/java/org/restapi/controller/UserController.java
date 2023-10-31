@@ -41,13 +41,40 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    //POST create a new user
+    //POST Create a new user
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public User createUser(@Valid UserDto userDto) {
+    public Response createUser(@Valid UserDto userDto) {
+    String name = userDto.getName();
+
+    // Check if name already exists
+    if (userService.isUserNameUnique(name)) {
+        // If it is a new name - save name in database
         User user = userDto.toUser();
         user.setId(generateUniqueId());
-        return userService.saveUser(user);
+        userService.saveUser(user);
+        
+        // Message Success
+        String successMessage = "User created successfully.";
+        // JSON
+        String jsonMessage = "{\"message\": \"" + successMessage + "\"}";
+
+        return Response.status(Response.Status.CREATED)
+        .entity(jsonMessage)
+        .type(MediaType.APPLICATION_JSON)
+        .build();
+
+    } else {
+        // Error if the name already exists
+        String errorMessage = "The name already exists";
+        // JSON
+        String jsonErrorMessage = "{\"message\": \"" + errorMessage + "\"}";
+
+        return Response.status(Response.Status.BAD_REQUEST)
+        .entity(jsonErrorMessage)
+        .type(MediaType.APPLICATION_JSON)
+        .build();
+    }
     }
 
     //Give the new user a random id 

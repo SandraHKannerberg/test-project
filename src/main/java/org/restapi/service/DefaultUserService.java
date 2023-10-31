@@ -6,8 +6,11 @@ import org.restapi.repository.UserRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
 public class DefaultUserService implements UserService {
@@ -18,6 +21,9 @@ public class DefaultUserService implements UserService {
     public DefaultUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public User getUserById(String id) throws UserNotFoundException {
@@ -54,5 +60,22 @@ public class DefaultUserService implements UserService {
     @Override
     public void deleteUser(String id) throws UserNotFoundException {
         userRepository.delete(getUserById(id));
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        try {
+            return em.createQuery("SELECT u FROM user_table u WHERE u.name = :name", User.class)
+            .setParameter("name", name)
+            .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean isUserNameUnique(String name) {
+        User existingUser = userRepository.findByName(name);
+        return existingUser == null;
     }
 }

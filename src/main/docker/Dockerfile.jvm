@@ -95,3 +95,6 @@ ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
 ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
 
+# Ladda ner MySQL JDBC-drivrutinen och kopiera den till /deployments/lib/
+#RUN curl -o /deployments/lib/mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.28/mysql-connector-java-8.0.28.jar
+
